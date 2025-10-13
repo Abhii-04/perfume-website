@@ -8,8 +8,11 @@ const router = express.Router(); //router-level middleware(importing router modu
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.use('/', routes); //using the router module
-
+app.use((req,res,next)=>{
+    console.log('Time:',Date.now(),req.method ,req.url);
+    next();
+})
+app.use('/',routes); //Loads all the routes from route.js file
 
 
 

@@ -3,14 +3,16 @@ const router = express.Router();
 const path = require('path');
 
 // Route to serve the user profile page
-router.get('/',(req,res)=>{
-    const filepath = path.join(__dirname,'../../frontend/templates/index.html');
-    try{
-        res.sendFile(filepath);
-    }catch(err){
-        res.status(500).send("error");
+router.route('/')
+  .get((req, res) => {
+    const filepath = path.join(__dirname, '../../frontend/templates/index.html');
+    try {
+      res.sendFile(filepath);
+    } catch (err) {
+      res.status(500).send("error");
     }
-});
+  }); 
+
 
 router.get('/contact',(req,res)=>{
     const filepath = path.join(__dirname,'../../frontend/templates/contact.html');
@@ -39,14 +41,20 @@ router.get('/login',(req,res)=>{
     }
 });
 
-router.get('/register',(req,res)=>{
-    const filepath = path.join(__dirname, '../../frontend/templates/register.html');
-    try{
-        res.sendFile(filepath);
-    } catch(err){
-        res.status(500).send("error");
-    }
-});
+router.route('/register')
+    .get((req,res)=>{
+        const filepath = path.join(__dirname, '../../frontend/templates/register.html');
+        try{
+            res.sendFile(filepath);
+        } catch(err){
+            res.status(500).send("error");
+        }
+    })
+    .post((req,res)=>{
+        res.send("registration post req");
+    });
+
+
 
 router.get('/product',(req,res)=>{
     const filepath = path.join(__dirname,'../../frontend/templates/product.html');
@@ -57,8 +65,28 @@ router.get('/product',(req,res)=>{
     }
 });
 
+// profile route
+router.route('/profile')
+    .get((req,res)=>{
+        const filepath = path.join(__dirname, '../../frontend/templates/profile.html');
+        try{
+            res.sendFile(filepath);
+        }catch(err){
+            res.status(500).send("error");
+        }
+    })
+    .post((req,res)=>{
+        res.sendfile("profile post data");
+    })
+    .put((req,res)=>{
+        res.update("profile data updated")
+    })
+
+
+
+// admmin route
 router.all('/admin',(req,res)=>{
-    filepath = path.join(__dirname,'../../frontend/templates/admin.html');
+    const filepath = path.join(__dirname,'../../frontend/templates/admin.html');
     try{
         res.sendFile(filepath);
     }catch(err){
