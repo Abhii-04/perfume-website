@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <link rel="stylesheet" href="styles/reviews.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <div class="reviews-container">
+        <!-- Hero Section -->
+        <div class="reviews-header">
+            <div class="reviews-header-content">
+                <h1>Client Reviews & Testimonials</h1>
+                <p>Discover what our clients say about their interior design transformations and experiences</p>
+            </div>
+        </div>
+
+        <div class="reviews-content">
+            <!-- Filters Section -->
+            <div class="reviews-filters">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchReviews" placeholder="Search reviews by keywords...">
+                </div>
+                <div class="filter-options">
+                    <select id="ratingFilter">
+                        <option value="">All Ratings</option>
+                        <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                        <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                        <option value="3">⭐⭐⭐ 3 Stars</option>
+                        <option value="2">⭐⭐ 2 Stars</option>
+                        <option value="1">⭐ 1 Star</option>
+                    </select>
+                    <select id="sortFilter">
+                        <option value="recent">Most Recent</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="helpful">Most Helpful</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loadingState" style="display: none;">
+                <div class="loading-spinner"></div>
+            </div>
+
+            <!-- Reviews Stats -->
+            <div class="reviews-stats">
+                <div class="overall-rating">
+                    <div class="rating-number">0.0</div>
+                    <div class="rating-stars">
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="rating-count">0 reviews</div>
+                </div>
+                <div class="rating-bars">
+                    <div class="rating-bar">
+                        <span class="stars">5 <i class="fas fa-star"></i></span>
+                        <div class="bar-container">
+                            <div class="bar rating-5" data-width="0"></div>
+                        </div>
+                        <span class="percentage">0%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="stars">4 <i class="fas fa-star"></i></span>
+                        <div class="bar-container">
+                            <div class="bar rating-4" data-width="0"></div>
+                        </div>
+                        <span class="percentage">0%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="stars">3 <i class="fas fa-star"></i></span>
+                        <div class="bar-container">
+                            <div class="bar rating-3" data-width="0"></div>
+                        </div>
+                        <span class="percentage">0%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="stars">2 <i class="fas fa-star"></i></span>
+                        <div class="bar-container">
+                            <div class="bar rating-2" data-width="0"></div>
+                        </div>
+                        <span class="percentage">0%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="stars">1 <i class="fas fa-star"></i></span>
+                        <div class="bar-container">
+                            <div class="bar rating-1" data-width="0"></div>
+                        </div>
+                        <span class="percentage">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews List -->
+            <div class="reviews-list" id="reviewsList">
+                <div class="no-reviews">
+                    <i class="far fa-comment-dots"></i>
+                    <h2>No Reviews Yet</h2>
+                    <p>Be the first to share your thoughts about our designs and help others discover amazing transformations!</p>
+                    <a href="/schedule_consultation" class="cta-button" style="
+                        display: inline-block;
+                        background: linear-gradient(135deg, #d4af87 0%, #c49a6b 100%);
+                        color: white;
+                        padding: 1rem 2rem;
+                        border-radius: 50px;
+                        text-decoration: none;
+                        font-weight: 600;
+                        margin-top: 1.5rem;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 4px 15px rgba(212, 175, 135, 0.3);
+                    ">Share Your Experience</a>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="portfolio-cta" style="
+                text-align: center;
+                background: linear-gradient(135deg, #2c2621 0%, #3c3530 100%);
+                color: white;
+                padding: 4rem 2rem;
+                border-radius: 30px;
+                margin-top: 4rem;
+                position: relative;
+                overflow: hidden;
+            ">
+                <div style="
+                    position: absolute;
+                    top: -50%;
+                    left: -50%;
+                    width: 200%;
+                    height: 200%;
+                    background: radial-gradient(circle, rgba(212, 175, 135, 0.1) 0%, transparent 70%);
+                    animation: float 15s ease-in-out infinite;
+                "></div>
+                <h2 style="
+                    font-size: 2.5rem;
+                    margin-bottom: 1rem;
+                    font-weight: 800;
+                    position: relative;
+                    z-index: 1;
+                ">Ready to Share Your Experience?</h2>
+                <p style="
+                    font-size: 1.2rem;
+                    margin-bottom: 2rem;
+                    color: rgba(255, 255, 255, 0.9);
+                    position: relative;
+                    z-index: 1;
+                ">Help others discover the magic of great interior design by sharing your story</p>
+                <a href="/schedule_consultation" style="
+                    display: inline-block;
+                    background: linear-gradient(135deg, #d4af87 0%, #c49a6b 100%);
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    font-weight: 700;
+                    font-size: 1.1rem;
+                    transition: all 0.4s ease;
+                    position: relative;
+                    z-index: 1;
+                    box-shadow: 0 8px 25px rgba(212, 175, 135, 0.3);
+                ">Write a Review</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Design Image</h3>
+                <button class="close-modal" onclick="closeImageModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="Design Image">
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Review Modal -->
+    <div class="modal" id="editReviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Review</h3>
+                <button class="close-modal" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editReviewForm">
+                    <input type="hidden" id="editReviewId">
+                    <div class="form-group">
+                        <label for="editRating">Rating</label>
+                        <div class="rating-input">
+                            <input type="radio" name="rating" value="5" id="star5">
+                            <label for="star5"><i class="far fa-star"></i></label>
+                            <input type="radio" name="rating" value="4" id="star4">
+                            <label for="star4"><i class="far fa-star"></i></label>
+                            <input type="radio" name="rating" value="3" id="star3">
+                            <label for="star3"><i class="far fa-star"></i></label>
+                            <input type="radio" name="rating" value="2" id="star2">
+                            <label for="star2"><i class="far fa-star"></i></label>
+                            <input type="radio" name="rating" value="1" id="star1">
+                            <label for="star1"><i class="far fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editComment">Review</label>
+                        <textarea id="editComment" rows="4" required placeholder="Share your thoughts about the design experience..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="javascript/reviews.js"></script>
+</body>
+</html>

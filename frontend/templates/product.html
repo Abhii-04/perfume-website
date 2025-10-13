@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <meta name="description" content="Discover the details of our luxury perfume collection. Premium ingredients, exquisite craftsmanship, and unforgettable fragrances.">
+    <link rel="canonical" href="/product">
+    <link rel="icon" href="/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/Styles/style.css"">
+
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="{{ url_for('home') }}" class="logo">
+                <h1 class="logo-text">Elegance</h1>
+                <span class="logo-subtitle">Perfumery</span>
+            </a>
+            
+            <button class="menu-btn" aria-label="Open navigation" aria-controls="primaryNav" aria-expanded="false" onclick="toggleMenu()">
+                <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+
+            <nav class="nav" id="primaryNav">
+                <a href="{{ url_for('home') }}" class="nav-link">Collection</a>
+                <a href="{{ url_for('about') }}" class="nav-link">About Us</a>
+                <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+            </nav>
+            
+            <button class="cart-btn" onclick="toggleCart()">
+                <svg class="cart-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.8 5.2M7 13l-1.8 5.2m0 0h9.6m-9.6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm9.6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                </svg>
+                <span class="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <section class="breadcrumb">
+            <div class="breadcrumb-container">
+                <a href="{{ url_for('home') }}" class="breadcrumb-link">Collection</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current" id="productBreadcrumb">Product Details</span>
+            </div>
+        </section>
+
+        <!-- Product Details -->
+        <section class="product-details" id="productDetails">
+            <!-- Product content will be loaded here by JavaScript -->
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Shopping Cart</h3>
+            <button class="cart-close" onclick="closeCart()">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="cart-content" id="cartContent">
+            <div class="cart-empty" id="cartEmpty">
+                <svg class="cart-empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13"></path>
+                </svg>
+                <p>Your cart is empty</p>
+            </div>
+            
+            <div class="cart-items" id="cartItems"></div>
+            
+            <div class="cart-footer" id="cartFooter" style="display: none;">
+                <div class="cart-total">
+                    <span class="total-label">Total:</span>
+                    <span class="total-amount" id="totalAmount">₹0</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© <span id="currentYear"></span> Elegance Perfumery. All rights reserved.</p>
+            <nav class="footer-nav">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="{{ url_for('about') }}">About</a>
+                <a href="{{ url_for('contact') }}">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+        // Handle missing/invalid product id gracefully
+        (function(){
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const container = document.getElementById('productDetails');
+            if (!id) {
+                container.innerHTML = '<div class="product-error">Product not found.</div>';
+                return;
+            }
+        })();
+
+        // Update year in footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const yearEl = document.getElementById('currentYear');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+        });
+    </script>
+    <script src="{{ url_for('static', filename='Scripts/data.js') }}"></script>
+    <script src="{{ url_for('static', filename='Scripts/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='Scripts/cart.js') }}"></script>
+    <script src="{{ url_for('static', filename='Scripts/products.js') }}"></script>
+    <script src="{{ url_for('static', filename='Scripts/app.js') }}"></script>
+
+</body>
+</html>
