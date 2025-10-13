@@ -14,7 +14,7 @@
 <body>
     <header class="header">
         <div class="header-container">
-            <a href="{{ url_for('home') }}" class="logo">
+            <a href="/" class="logo">
                 <h1 class="logo-text">Elegance</h1>
                 <span class="logo-subtitle">Perfumery</span>
             </a>
@@ -26,9 +26,9 @@
             </button>
             
             <nav class="nav" id="primaryNav">
-                <a href="{{ url_for('home') }}" class="nav-link">Collection</a>
-                <a href="{{ url_for('about') }}" class="nav-link active">About Us</a>
-                <a href="{{ url_for('contact') }}" class="nav-link">Contact</a>
+                <a href="/" class="nav-link">Collection</a>
+                <a href="/about" class="nav-link active">About Us</a>
+                <a href="/contact" class="nav-link">Contact</a>
             </nav>
             
             <button class="cart-btn" onclick="toggleCart()">
@@ -67,7 +67,7 @@
                             Each creation is the result of a meticulous artisanal process, where tradition and 
                             innovation meet to give birth to unique and timeless olfactory compositions.
                         </p>
-                        <a href="{{ url_for('home') }}" class="story-btn">Discover Our Creations</a>
+                        <a href="/" class="story-btn">Discover Our Creations</a>
                     </article>
                     
                     <div class="story-visual">
@@ -205,9 +205,9 @@
         <div class="footer-container">
             <p>© <span id="currentYear"></span> Elegance Perfumery. All rights reserved.</p>
             <nav class="footer-nav">
-                <a href="{{ url_for('home') }}">Home</a>
-                <a href="{{ url_for('about') }}">About</a>
-                <a href="{{ url_for('contact') }}">Contact</a>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
             </nav>
         </div>
     </footer>
@@ -218,10 +218,10 @@
             if (yearEl) yearEl.textContent = new Date().getFullYear();
         });
     </script>
-    <script src="{{ url_for('static', filename='Scripts/data.js') }}"></script>
-    <script src="{{ url_for('static', filename='Scripts/utils.js') }}"></script>
-    <script src="{{ url_for('static', filename='Scripts/cart.js') }}"></script>
-    <script src="{{ url_for('static', filename='Scripts/products.js') }}"></script>
-    <script src="{{ url_for('static', filename='Scripts/app.js') }}"></script>
+    <script src="/static/Scripts/data.js"></script>
+    <script src="/static/Scripts/utils.js"></script>
+    <script src="/static/Scripts/cart.js"></script>
+    <script src="/static/Scripts/products.js"></script>
+    <script src="/static/Scripts/app.js"></script>
 </body>
 </html>
