@@ -57,5 +57,14 @@ router.get('/product',(req,res)=>{
     }
 });
 
+router.all('/admin',(req,res)=>{
+    filepath = path.join(__dirname,'../../frontend/templates/admin.html');
+    try{
+        res.sendFile(filepath);
+    }catch(err){
+        res.status(500).send("error");
+    }
+});
+
 
 module.exports = router;
