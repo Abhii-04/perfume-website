@@ -1,118 +1,122 @@
-const express = require('express');
+import express from 'express';
+import db from '../config/db.js';
 const router = express.Router();
-const path = require('path');
-// const db = require('./config/db');
-// const models = require('./models/schema');
+import path from 'path';
+import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+import Contact from '../models/contact.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
-// dotenv.config(); //load .env file
+import dotenv from 'dotenv';
+dotenv.config(); // load .env file
 
-
-router.use((req,res,next)=>{
-    console.log('Time:',Date.now(),req.method ,req.url);
+router.use((req, res, next) => {
+    console.log('Time:', Date.now(), req.method, req.url);
     next();
-})
+});
+
 // Route to serve the user profile page
 router.route('/')
-  .get((req, res) => {
-    const filepath = path.join(__dirname, '../../frontend/templates/index.html');
-    try {
-      res.sendFile(filepath);
-    } catch (err) {
-      res.status(500).send("error");
-    }
-  }); 
-
-
-router.get('/contact',(req,res)=>{
-    const filepath = path.join(__dirname,'../../frontend/templates/contact.html');
-    try{
-        res.sendFile(filepath);
-    }catch(err){
-        res.status(500).send("error");
-    }
-});
-
-router.get('/about',(req,res)=>{
-    const filepath=path.join(__dirname,'../../frontend/templates/about.html');
-    try{
-        res.sendFile(filepath);
-    }catch(err){
-        res.status(500).send("error");
-    }
-});
-router.route('/product')
-    .get((req,res)=>{
-        const filepath = path.join(__dirname, '../../frontend/templates/products.html');
-        try{
+    .get((req, res) => {
+        const filepath = path.join(__dirname, '../../frontend/templates/index.html');
+        try {
             res.sendFile(filepath);
-        }catch(err){
+        } catch (err) {
             res.status(500).send("error");
         }
-    })
-    
-
-router.get('/login',(req,res)=>{
-    const filepath = path.join(__dirname,'../../../frontend/templates/login.html');
-    try{
-        res.sendFile(filepath);
-    }catch(err){
-        res.status(500).send("error");
-    }
-});
-
-router.route('/Product')
-    .get((req,res)=>{
-        const filepath = path.join(__dirname, '../../frontend/templates/product.html');
-        try{
-            res.sendFile(filepath);
-        }catch(err){
-            res.status(500).send("error");
-        }
-    })
-
-router.route('/register')
-    .get((req,res)=>{
-        const filepath = path.join(__dirname, '../../frontend/templates/register.html');
-        try{
-            res.sendFile(filepath);
-        } catch(err){
-            res.status(500).send("error");
-        }
-    })
-    .post((req,res)=>{
-        res.send("registration post req");
     });
 
+router.route('/register')
+    .get((req, res) => {
+        const filepath = path.join(__dirname, '../../frontend/templates/register.html');
+        try {
+            res.sendFile(filepath);
+        } catch (err) {
+            res.status(500).send("error");
+        }
+    })
+    .post((req, res) => {
+        res.send("registration post req");
+    });
+router.get('/login', (req, res) => {
+    const filepath = path.join(__dirname, '../../frontend/templates/login.html');
+    try {
+        res.sendFile(filepath);
+    } catch (err) {
+        res.status(500).send("error");
+    }
+});
+
+router.route('/contact')
+    .get((req, res) => {
+        const filepath = path.join(__dirname, '../../frontend/templates/contact.html');
+        try {
+            res.sendFile(filepath);
+        } catch (err) {
+            res.status(500).send("error");
+        }
+    })
+    .post(async(req,res)=>{
+        try{
+            const newcontact=new Contact(req.body);
+            await newcontact.save();
+            console.log('contact payload', req.body);
+            res.status(201).json({message:'Message sent succesfully'});
+        }catch(err){
+            res.status(500).json({error:'Failed to send message'});
+        }
+
+    });
+
+router.get('/about', (req, res) => {
+    const filepath = path.join(__dirname, '../../frontend/templates/about.html');
+    try {
+        res.sendFile(filepath);
+    } catch (err) {
+        res.status(500).send("error");
+    }
+});
+
+
+
+router.route('/Product')
+    .get((req, res) => {
+        const filepath = path.join(__dirname, '../../frontend/templates/product.html');
+        try {
+            res.sendFile(filepath);
+        } catch (err) {
+            res.status(500).send("error");
+        }
+    });
 
 // profile route
 router.route('/profile')
-    .get((req,res)=>{
+    .get((req, res) => {
         const filepath = path.join(__dirname, '../../frontend/templates/profile.html');
-        try{
+        try {
             res.sendFile(filepath);
-        }catch(err){
+        } catch (err) {
             res.status(500).send("error");
         }
     })
-    .post((req,res)=>{
-        res.sendfile("profile post data");
+    .post((req, res) => {
+        res.send("profile post data");
     })
-    .put((req,res)=>{
-        res.update("profile data updated")
-    })
+    .put((req, res) => {
+        res.send("profile data updated");
+    });
 
-
-
-// admmin route
-router.all('/admin',(req,res)=>{
-    const filepath = path.join(__dirname,'../../frontend/templates/admin.html');
-    try{
+// admin route
+router.all('/admin', (req, res) => {
+    const filepath = path.join(__dirname, '../../frontend/templates/admin.html');
+    try {
         res.sendFile(filepath);
-    }catch(err){
+    } catch (err) {
         res.status(500).send("error");
     }
 });
 
-
-module.exports = router;
+export default router;

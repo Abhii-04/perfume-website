@@ -1,16 +1,22 @@
-const express = require('express');
-const path = require('path');
+import express from 'express';
+import path from 'path';
 const app = express();
-const routes=require('./routes/routes');
-const adminroute = require('./admin/adminroute.js');
+import routes from './routes/routes.js';
+import { dirname } from 'path';
+import {fileURLToPath} from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-require('dotenv').config(); //load .env file
+import db from'./config/db.js';
+
+import dotenv from 'dotenv'; //load .env file
+dotenv.config(); //load .env file
+
 const router = express.Router();//initialising routes
-// const db = db(); //router-level middleware(importing router module)
 
 app.use(express.static(path.join(__dirname, '../frontend')));
-
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // still deciding on how to implement this part of code
 app.response.sendStatus = function(statusCode,type,message){
