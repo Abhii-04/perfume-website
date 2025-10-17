@@ -1,35 +1,40 @@
 import express from 'express';
 import path from 'path';
-const app = express();
+import dotenv from 'dotenv';
 import routes from './routes/routes.js';
+import connectDB from './config/db.js'; // Only import once
+
 import { dirname } from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import db from'./config/db.js';
+dotenv.config(); // Load .env file
 
-import dotenv from 'dotenv'; //load .env file
-dotenv.config(); //load .env file
+const app = express();
 
-const router = express.Router();//initialising routes
+// 🗄️ CONNECT DATABASE
+connectDB(); // No argument needed — handles connection internally
 
+// ROUTES INITIALIZATION
+const router = express.Router();
+
+// MIDDLEWARES
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// still deciding on how to implement this part of code
-app.response.sendStatus = function(statusCode,type,message){
-    return this.contentType(type)
-    .status(statusCode)
-    .send(message);
-}
-app.use('/',routes); //Loads all the routes from route.js file
+// CUSTOM RESPONSE METHOD (optional utility)
+app.response.sendStatus = function (statusCode, type, message) {
+  return this.contentType(type).status(statusCode).send(message);
+};
 
+// ROUTES
+app.use('/', routes);
 
-
-
-let port = process.env.PORT || 5000;
-app.listen(port,()=>{
-    console.log(`server is running on ${port} `);
+// SERVER LISTENER
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`✅ Server is running on port ${port}`);
 });
